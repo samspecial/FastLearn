@@ -1,4 +1,4 @@
-﻿using FastLearn.Models;
+﻿using FastLearn.Infrastructures.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;

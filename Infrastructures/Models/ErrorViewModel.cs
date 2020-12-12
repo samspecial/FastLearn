@@ -1,6 +1,6 @@
 using System;
 
-namespace FastLearn.Models
+namespace FastLearn.Infrastructures.Models
 {
     public class ErrorViewModel
     {
