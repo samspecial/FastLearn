@@ -6,11 +6,10 @@ using System.Threading.Tasks;
 
 namespace FastLearn.Infrastructures.Models
 {
-    public class Faculty:IdentityUser
+    public class ApplicationUser:IdentityUser
     {
-        public string FullName { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
         public string Address { get; set; }
-        public ICollection<Student> Students { get; set; }
-        public ICollection<Query> Queries { get; set; }
     }
 }
