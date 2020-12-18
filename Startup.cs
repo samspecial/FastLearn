@@ -1,3 +1,4 @@
+using FastLearn.Areas.Admin.Repositories;
 using FastLearn.Infrastructures;
 using FastLearn.Infrastructures.Models;
 using Microsoft.AspNetCore.Builder;
@@ -29,18 +30,31 @@ namespace FastLearn
         {
             services.AddDbContext<ELearningDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             services.AddIdentity<ApplicationUser, IdentityRole>().AddEntityFrameworkStores<ELearningDbContext>().AddDefaultTokenProviders();
+            services.AddScoped<ICourse, CourseRepository>();
+            services.AddScoped<IEnrolStudent, EnrolStudentRepository>();
+            services.AddScoped<IFaculty, FacultyRepository>();
+            
             services.AddControllersWithViews();
 
-            //services.ConfigureApplicationCookie(options =>
-            //{
-            //    options.LoginPath = "/home/login";
-            //    options.AccessDeniedPath = "/admin/account/accessdenied";
-            //});
+            services.Configure<IdentityOptions>(options =>
+            {
+                options.Password.RequiredLength = 10;
+                options.Password.RequiredUniqueChars = 2;
+
+                options.Lockout.MaxFailedAccessAttempts = 3;
+                options.Lockout.DefaultLockoutTimeSpan= TimeSpan.FromMinutes(20);
+            });
+
+            services.ConfigureApplicationCookie(options =>
+            {
+               options.LoginPath = "/home/account/login";
+               options.AccessDeniedPath = "/admin/account/accessdenied";
+            });
 
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager)
         {
             if (env.IsDevelopment())
             {
@@ -54,13 +68,23 @@ namespace FastLearn
             }
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-            
+
+            ELearningDbInitializer.SeedData(userManager, roleManager).Wait();
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
+                endpoints.MapControllerRoute(
+                name: "areas",
+                pattern: "{area:exists}/{controller=Student}/{action=Index}/{id?}"
+                );
+                endpoints.MapControllerRoute(
+                name: "areas",
+                pattern: "{area:exists}/{controller=Faculty}/{action=Index}/{id?}"
+                );
                 endpoints.MapControllerRoute(
                 name: "areas",
                 pattern: "{area:exists}/{controller=Dashboard}/{action=Index}/{id?}"

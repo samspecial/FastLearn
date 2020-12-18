@@ -8,6 +8,7 @@ namespace FastLearn.Infrastructures.Models
     public class Enrollment
     {
         public int Id { get; set; }
+        public bool isComplete { get; set; }
         public int ApplicationUserId { get; set; }
         public ApplicationUser ApplicationUser { get; set; }
         public Course Course { get; set; }

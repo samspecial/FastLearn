@@ -1,0 +1,61 @@
+﻿@model AccountRegisterViewModel
+@{
+    ViewData["Title"] = "Register";
+}
+<div class="hero-wrap js-fullheight" style="background-image: url('images/bg_1.jpg');">
+    <div class="overlay"></div>
+    <div class="container">
+        <div class="row no-gutters slider-text js-fullheight align-items-center" data-scrollax-parent="true">
+            <div class="col-md-3 ftco-animate">
+            </div>
+            <div class="col-md-6"></div>
+            <div class="col-md-3 ftco-animate"></div>
+            </div>
+        </div>
+</div>
+<section class="ftco-section ftco-no-pb ftco-no-pt">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3"></div>
+            <div class="col-md-6 order-md-last">
+                <div class="login-wrap p-4 p-md-5">
+                    <h3 class="mb-4">Register Now</h3>
+                    @if (TempData["StatusMessage"] != null)
+                    {
+                        <div class="alert alert-success">
+                            @TempData["StatusMessage"]
+                        </div>
+                    }
+                <form asp-action="register" asp-controller="account" class="signup-form" method="post">
+                    <div class="text-danger" asp-validation-summary="ModelOnly"></div>
+                    <div class="form-group">
+                        <label class="label" asp-for="FullName">Full Name</label>
+                        <input asp-for="FullName" class="form-control" placeholder="John Doe">
+                        <span asp-validation-for="FullName" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Email" class="label" for="email">Email Address</label>
+                        <input asp-for="Email" class="form-control" placeholder="johndoe@gmail.com">
+                        <span asp-validation-for="Email" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label class="label" asp-for="Password">Password</label>
+                        <input asp-for="Password" class="form-control" placeholder="Password">
+                        <span asp-validation-for="Password" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="ConfirmPassword" class="label">Confirm Password</label>
+                        <input asp-for="ConfirmPassword" class="form-control" placeholder="Confirm Password">
+                        <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+                    </div>
+                    <div class="form-group d-flex justify-content-end mt-4">
+                        <button type="submit" class="btn btn-primary submit"><span class="fa fa-paper-plane"></span></button>
+                    </div>
+                </form>
+                    <p class="text-center">Already have an account? <a asp-action="login" asp-controller="account">Sign In</a></p>
+                </div>
+            </div>
+            <div class="col-md-3"></div>
+        </div>
+    </div>
+</section>

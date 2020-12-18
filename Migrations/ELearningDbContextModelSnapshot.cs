@@ -32,6 +32,9 @@ namespace FastLearn.Migrations
                     b.Property<string>("CourseMaterial")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("DisplayImage")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Duration")
                         .HasColumnType("nvarchar(max)");
 
@@ -67,6 +70,9 @@ namespace FastLearn.Migrations
 
                     b.Property<int>("StudyCenterId")
                         .HasColumnType("int");
+
+                    b.Property<bool>("isComplete")
+                        .HasColumnType("bit");
 
                     b.HasKey("Id");
 
@@ -358,10 +364,7 @@ namespace FastLearn.Migrations
                     b.Property<string>("Address")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("FirstName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("LastName")
+                    b.Property<string>("FullName")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasDiscriminator().HasValue("ApplicationUser");

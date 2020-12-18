@@ -1,0 +1,59 @@
+﻿@model CourseAddViewModel
+
+@{ 
+    ViewData["Title"] = "Add Course";
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-xl-3 col-xl-3"></div>
+        
+        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12">
+            <h4>Add new course to list</h4>
+            <div class="card">
+                <h5 class="card-header">Course Form</h5>
+                <div class="card-body">
+                    <div asp-validation-summary="ModelOnly"></div>
+                    <form asp-action="addcourse" asp-controller="course" method="post" enctype="multipart/form-data">
+                        @if(TempData["StatusMessage"]!=null)
+                        {
+                            <div class="alert alert-info">
+                                @TempData["StatusMessage"]
+                            </div>
+                        }
+                        <div class="form-group">
+                            <label asp-for="Name">Course Name</label>
+                            <input asp-for="Name" data-parsley-trigger="change" placeholder="Enter course name" autocomplete="off" class="form-control">
+                            <span class="text-danger" asp-validation-for="Name"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Duration">Duration</label>
+                            <input asp-for="Duration" placeholder="Enter duration" autocomplete="off" class="form-control">
+                            <span class="text-danger" asp-validation-for="Duration"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Fee">Fee</label>
+                            <input asp-for="Fee" placeholder="Course fee" class="form-control">
+                            <span class="text-danger" asp-validation-for="Fee"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Prerequisite">Previous Knowledge</label>
+                            <input asp-for="Prerequisite" placeholder="Previous Knowledge" class="form-control">
+                            <span class="text-danger" asp-validation-for="Prerequisite"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="DisplayImage">Course cover image</label>
+                            <input asp-for="DisplayImage" type="file" placeholder="Course cover image" class="form-control">
+                            <span class="text-danger" asp-validation-for="DisplayImage"></span>
+                        </div>
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-space btn-primary">Submit</button>
+
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-xl-3"></div>
+    </div>
+</div>

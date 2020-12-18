@@ -1,0 +1,54 @@
+﻿@model ManageCourseViewModel
+@{ 
+    ViewData["Title"] = "Manage Course";
+}
+
+<div class="container">
+    <div class="row">
+
+        <div class="col-md-1"></div>
+        <span class="btn btn-info"><a asp-action="addcourse" asp-controller="course">Add Course</a></span>
+        <div class="col-md-10">
+            <table class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th>S/N</th>
+                        <th>Name</th>
+                        <th>Duration</th>
+                        <th>Fee</th>
+                        <th>More</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model.AvailableCourses.Any<Course>())
+                    {
+                        var count = 0;
+                        foreach (var course in Model.AvailableCourses)
+                        {
+                            <tr>
+                                <td><p>@(++count)</p></td>
+                                <td><p>@course.Name </p></td>
+                                <td><p>@course.Duration</p></td>
+                                <td><p>@course.Fee</p></td>
+                                <td><span class="btn btn-info"><a class="text-white" asp-action="singlecourse" asp-route-id="@course.Id">More</a></span> <span class="btn btn-danger"><a asp-action="singlecourse" class="text-white">Delete</a></span></td>
+                            </tr>
+                        }
+                    }
+                    else
+                    {
+                        <tr>
+                            <td><p>I am fine</p></td>
+                            <td><p> Let's rejoice </p></td>
+                            <td><p>10 Months</p></td>
+                            <td><p>50000</p></td>
+                            <td><span class="btn btn-info"><a class="text-white" asp-action="singlecourse">More</a></span> <span class="btn btn-danger"><a asp-action="singlecourse" class="text-white">Delete</a></span></td>
+                        </tr>
+                    }
+
+                </tbody>
+                
+            </table>
+        </div>
+        <div class="col-md-1"></div>
+    </div>
+</div>

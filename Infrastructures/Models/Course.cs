@@ -13,6 +13,7 @@ namespace FastLearn.Infrastructures.Models
         public string Prerequisite { get; set; }
         [Column(TypeName="decimal(18, 2)")]
         public decimal Fee { get; set; }
+        public string DisplayImage { get; set; }
         public ICollection<Enrollment>  Enrollments{ get; set; }
         public string Duration { get; set; }
         public string CourseMaterial { get; set; }
