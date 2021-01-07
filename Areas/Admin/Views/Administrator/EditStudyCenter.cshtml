@@ -1,0 +1,27 @@
+﻿@model EditStudyCenterViewModel
+@{
+    ViewData["Title"] = "Edit Study Center";
+}
+
+<div class="container">
+<h3>Create Study Center</h3>
+@if (TempData["StatusMessage"] != null)
+{
+    <div class="alert alert-info" role="alert">
+        @TempData["StatusMessage"]
+    </div>
+}
+<form asp-action="editstudycenter" asp-controller="administrator" method="post">
+    <div class="form-group">
+        <label asp-for="Name">Name</label>
+        <input asp-for="Name" class="form-control" />
+        <span asp-validation-for="Name" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Location">Location</label>
+        <input asp-for="Location" class="form-control" />
+        <span asp-validation-for="Location" class="text-danger"></span>
+    </div>
+    <button class="btn btn-primary" type="submit">Update Center</button> <p class="mt-5 h3">Click <a asp-action="createstudycenter" class="text-primary">here</a> to return to study center page</p>
+</form>
+</div>

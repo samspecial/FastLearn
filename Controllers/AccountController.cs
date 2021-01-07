@@ -14,15 +14,15 @@ namespace FastLearn.Controllers
 
     public class AccountController : Controller
     {
-        private readonly UserManager<ApplicationUser> userManager;
-        private readonly RoleManager<IdentityRole> roleManager;
-        private readonly SignInManager<ApplicationUser> signInManager;
+        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly RoleManager<IdentityRole> _roleManager;
+        private readonly SignInManager<ApplicationUser> _signInManager;
 
         public AccountController(UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager, SignInManager<ApplicationUser> signInManager)
         {
-            this.userManager = userManager;
-            this.roleManager = roleManager;
-            this.signInManager = signInManager;
+            _userManager = userManager;
+            _roleManager = roleManager;
+            _signInManager = signInManager;
         }
 
         [HttpGet]
@@ -38,7 +38,7 @@ namespace FastLearn.Controllers
             if (!ModelState.IsValid)
                 return View(login);
 
-            var result = await signInManager.PasswordSignInAsync(login.Email, login.Password, false, false);
+            var result = await _signInManager.PasswordSignInAsync(login.Email, login.Password, login.RememberMe, false);
            
             if (result.Succeeded)
             {
@@ -47,24 +47,29 @@ namespace FastLearn.Controllers
                     return LocalRedirect(returnUrl);
                 else
                 {
-                    //var role = roleManager.Roles;
-                    var user = await userManager.FindByEmailAsync(login.Email);
-                  
-                    var role = await userManager.GetRolesAsync(user);
+                    
+                    var user = await _userManager.FindByEmailAsync(login.Email);
+                    
+                   //var role = _roleManager.Roles;
+                    var role = await _userManager.GetRolesAsync(user);
+                    
 
-
-                        if (role.Contains("Student") == true)
-                        {
-                            return RedirectToAction("Index", "Student", new { Area = "student" });
-                        }
-                        else if (role.Contains("Administrator") == true)
-                        {
-                            return RedirectToAction("Index", "Dashboard", new { Area = "admin" });
-                        }
-                        else
-                        {
-                            return RedirectToAction("Index", "Faculty", new { area = "faculty" });
-                        }
+                    if (role.Contains("Student") == true)
+                    {
+                        return RedirectToAction("Index", "Student", new { Area = "student" });
+                    }
+                    else if (role.Contains("Administrator") == true)
+                    {
+                        return RedirectToAction("Index", "Dashboard", new { Area = "admin" });
+                    }
+                    else if(role.Contains("Faculty") == true)
+                    {
+                        return RedirectToAction("Index", "Faculty", new { area = "faculty" });
+                    }
+                    else
+                    {
+                        return RedirectToAction("Index", "Home");
+                    }
 
                 }
             }
@@ -73,8 +78,7 @@ namespace FastLearn.Controllers
                 ModelState.AddModelError(string.Empty, "Invalid login details");
             }
             return View(login);
-        }
-
+       }
 
         [HttpGet]
         public IActionResult Register()
@@ -94,10 +98,10 @@ namespace FastLearn.Controllers
                 Email = register.Email,
                 UserName = register.Email
             };
-            var result = await userManager.CreateAsync(user, register.Password);
+            var result = await _userManager.CreateAsync(user, register.Password);
             if (result.Succeeded)
             {
-                
+                await _signInManager.SignInAsync(user, false);
                 TempData["StatusMessage"] = $"{register.FullName} Account successfully created";
                 return View("Register");
             }
@@ -110,6 +114,13 @@ namespace FastLearn.Controllers
                 }
             }
             return View(register);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Logout()
+        {
+            await _signInManager.SignOutAsync();
+            return RedirectToAction("Login", "Account", new { Area = "default" });
         }
 
         //[HttpGet]

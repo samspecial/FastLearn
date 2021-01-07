@@ -17,16 +17,38 @@ namespace FastLearn.Areas.Admin.Controllers
     {
         private readonly IEnrolStudent _enrolStudent;
         private readonly UserManager<ApplicationUser> _userManager;
-
-        public EnrolmentController(IEnrolStudent enrolStudent, UserManager<ApplicationUser> userManager)
+        private readonly ICourse _course;
+        private readonly IAdmin _admin;
+        public EnrolmentController(IEnrolStudent enrolStudent, UserManager<ApplicationUser> userManager, ICourse course, IAdmin admin)
         {
             _enrolStudent = enrolStudent;
             _userManager = userManager;
+            _course = course;
+            _admin = admin;
         }
         public async Task<IActionResult> Index()
         {
-            return View(await _enrolStudent.GetEnrollments());
+            var allStudents = await _userManager.GetUsersInRoleAsync("Student");
+            EnrolStudentViewModel enrolStudent = new EnrolStudentViewModel
+            {
+                AllEnrollments = allStudents
+            };
+            return View(enrolStudent);
         }
+
+        //[NonAction]
+        //public async Task<PopulateEnrolViewModel> PopulateView(PopulateEnrolViewModel viewModel)
+        //{
+        //    var allEnrollments = await _userManager.GetUsersInRoleAsync("Student");
+        //    var allCourses = await _course.GetCourses();
+        //    var allCenters = await _admin.GetCenters();
+
+        //    viewModel.Enrollments = allEnrollments;
+        //    viewModel.Courses = allCourses;
+        //    viewModel.Centers = allCenters;
+
+        //    return viewModel;
+        //}
 
         //[HttpGet]
         //public async Task<IActionResult> Enroll()

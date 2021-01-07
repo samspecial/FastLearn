@@ -1,22 +1,20 @@
-﻿@model FacultyAddViewModel
+﻿@model UserAddViewModel
 
 @{ 
-    ViewData["Title"] = "Add faculty";
+    ViewData["Title"] = "Add User";
 }
-
-<div><h3>Great news, you can now add faculty</h3></div>
 
 <div class="container">
     <div class="row">
         <div class="col-xl-3 col-xl-3"></div>
 
         <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12">
-            <h4>Onboard a new faculty member</h4>
+            <h4>Onboard a new user</h4>
             <div class="card">
-                <h5 class="card-header">Faculty Form</h5>
+                <h5 class="card-header">User Details</h5>
                 <div class="card-body">
                     <div asp-validation-summary="ModelOnly"></div>
-                    <form asp-action="addfaculty" asp-controller="faculty" method="post">
+                    <form asp-action="adduser" asp-controller="user" method="post">
                         @if (TempData["StatusMessage"] != null)
                         {
                             <div class="alert alert-info">
@@ -25,13 +23,18 @@
                         }
                         <div class="form-group">
                             <label asp-for="FullName">Full Name</label>
-                            <input asp-for="FullName" data-parsley-trigger="change" placeholder="Enter fullname" autocomplete="off" class="form-control">
+                            <input asp-for="FullName" placeholder="Enter fullname" autocomplete="off" class="form-control">
                             <span class="text-danger" asp-validation-for="FullName"></span>
                         </div>
                         <div class="form-group">
                             <label asp-for="Email">Email</label>
                             <input asp-for="Email" placeholder="Enter email address" autocomplete="off" class="form-control">
                             <span class="text-danger" asp-validation-for="Email"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Password">Password</label>
+                            <input asp-for="Password" placeholder="password" class="form-control">
+                            <span class="text-danger" asp-validation-for="Password"></span>
                         </div>
                         <div class="form-group">
                             <label asp-for="PhoneNumber">Phone Number</label>
@@ -43,7 +46,13 @@
                             <input asp-for="Address" placeholder="Address" class="form-control">
                             <span class="text-danger" asp-validation-for="Address"></span>
                         </div>
-                        
+                        <div class="form-group">
+                            <label asp-for="Role">User Role</label>
+                            <select asp-for="Role" asp-items="Model.UserRoles" class="form-control">
+                                <option></option>
+                            </select>
+                            <span asp-validation-for="Role" class="text-danger"></span>
+                        </div>
                         <div class="form-group">
                             <button type="submit" class="btn btn-space btn-primary">ADD</button>
 

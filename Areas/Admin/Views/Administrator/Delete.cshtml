@@ -1,0 +1,21 @@
+﻿@model AdminDeleteViewModel
+
+@{
+    ViewData["Title"] = "Delete Administrator";
+}
+
+
+<div class="container">
+    <h3 class="display-4">Are you sure you want to delete the record for this user?</h3>
+    <form method="post" asp-action="delete" asp-controller="administrator">
+        <div class="form-group">
+            <input type="hidden" autofocus asp-for="Id" />
+        </div>
+
+        <div class="text-right">
+            <button type="submit" class="btn btn-danger btn-block waves-effect waves-light">Remove Admin</button>
+        </div>
+
+
+    </form>
+</div>

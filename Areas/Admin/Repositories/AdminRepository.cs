@@ -8,46 +8,43 @@ using System.Threading.Tasks;
 
 namespace FastLearn.Areas.Admin.Repositories
 {
-    public class AdminRepository:IAdminRepository
+    public class AdminRepository : IAdmin
     {
-       
-        private readonly ELearningDbContext _dbContext;
+        private readonly ELearningDbContext _eLearningDb;
 
-        public AdminRepository(ELearningDbContext dbContext)
+        public AdminRepository(ELearningDbContext eLearningDb)
         {
-            _dbContext = dbContext;
+            _eLearningDb = eLearningDb;
         }
-
-        public async Task<IEnumerable<ApplicationUser>> GetAdmins()
+        public async Task<bool> CreateCenter(StudyCenter center)
         {
-            return await _dbContext.ApplicationUsers.OrderByDescending(a => a.Id).ToListAsync();
-        }
-
-        public async Task<ApplicationUser> GetAdmin(int id)
-        {
-            return await _dbContext.ApplicationUsers.FindAsync(id);
-        }
-
-        public async Task RemoveAdmin(int id)
-        {
-            var faculty = await _dbContext.ApplicationUsers.FindAsync(id);
-            _dbContext.ApplicationUsers.Remove(faculty);
-            await _dbContext.SaveChangesAsync();
-        }
-
-        public async Task<bool> SignUpAdmin(ApplicationUser faculty)
-        {
-            await _dbContext.ApplicationUsers.AddAsync(faculty);
-            await _dbContext.SaveChangesAsync();
+          await  _eLearningDb.StudyCenters.AddAsync(center);
+            await _eLearningDb.SaveChangesAsync();
             return true;
         }
 
-        public async Task UpdateAdmin(ApplicationUser faculty)
+        public async Task<StudyCenter> GetCenter(int id)
         {
-            _dbContext.ApplicationUsers.Update(faculty);
-            await _dbContext.SaveChangesAsync();
+            return await _eLearningDb.StudyCenters.FindAsync(id);
+        }
+
+        public async Task<IEnumerable<StudyCenter>> GetCenters()
+        {
+            return await _eLearningDb.StudyCenters.OrderByDescending(s => s.Location).ToListAsync();
+        }
+
+        public async Task RemoveCenter(int id)
+        {
+            var result = await _eLearningDb.StudyCenters.FindAsync(id);
+            _eLearningDb.StudyCenters.Remove(result);
+            await _eLearningDb.SaveChangesAsync();
+        }
+
+        public async Task<bool> UpdateCenter(StudyCenter center)
+        {
+            _eLearningDb.StudyCenters.Update(center);
+            await _eLearningDb.SaveChangesAsync();
+            return true;
         }
     }
-
-    
 }

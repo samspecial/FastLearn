@@ -1,0 +1,49 @@
+﻿@model StudyCenterViewModel
+
+@{ 
+    ViewData["Title"] = "Create Study Center";
+}
+
+<div class="container">
+    <h3>Create Study Center</h3>
+    @if (TempData["StatusMessage"] != null)
+    {
+        <div class="alert alert-info" role="alert">
+            @TempData["StatusMessage"]
+        </div>
+    }
+<form asp-action="createstudycenter" asp-controller="administrator" method="post">
+    <div class="form-group">
+        <label asp-for="Name">Name</label>
+        <input asp-for="Name" class="form-control" />
+        <span asp-validation-for="Name" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Location">Location</label>
+        <input asp-for="Location" class="form-control" />
+        <span asp-validation-for="Location" class="text-danger"></span>
+    </div>
+    <button class="btn btn-primary" type="submit">Create Center</button>
+</form>
+    <div>
+        <h2 class="h3 mt-2">List of available study centers</h2>
+        @if (Model.Studies.Any())
+        {
+            foreach (var center in Model.Studies)
+            {
+                <div class="form-group mb-4">
+                    <label>Study Center Id: <input disabled asp-for="@center.Id" class="form-control" style="width:100%;" /></label>
+
+                    <h4>Center Name: @center.Name</h4>
+                    <h4>Center Location: @center.Location</h4>
+                    <p class="mb-0"> <a class="btn btn-primary" asp-route-id="@center.Id" asp-action="editstudycenter">Edit</a> <a class="btn btn-danger" asp-action="deletestudycenter" asp-route-id="@center.Id">Delete</a></p>
+                </div>
+            }
+        }
+        else
+        {
+            <div>No Study center exist at the moment.</div>
+        }
+
+    </div>
+</div>

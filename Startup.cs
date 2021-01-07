@@ -32,7 +32,7 @@ namespace FastLearn
             services.AddIdentity<ApplicationUser, IdentityRole>().AddEntityFrameworkStores<ELearningDbContext>().AddDefaultTokenProviders();
             services.AddScoped<ICourse, CourseRepository>();
             services.AddScoped<IEnrolStudent, EnrolStudentRepository>();
-            services.AddScoped<IFaculty, FacultyRepository>();
+            services.AddScoped<IAdmin, AdminRepository>();
             
             services.AddControllersWithViews();
 
@@ -54,7 +54,7 @@ namespace FastLearn
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
             {
@@ -69,7 +69,6 @@ namespace FastLearn
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
-            ELearningDbInitializer.SeedData(userManager, roleManager).Wait();
             app.UseRouting();
 
             app.UseAuthentication();

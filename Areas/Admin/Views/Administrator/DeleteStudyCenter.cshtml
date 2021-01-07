@@ -1,0 +1,19 @@
+﻿@model DeleteStudyViewModel
+@{ 
+    ViewData["Title"] = "Delete Center";
+}
+
+<div class="container">
+    <h3 class="display-4">Are you sure you want to delete @Model.Name in @Model.Location?</h3>
+    <form method="post" asp-action="deletecenter" asp-controller="administrator">
+        <div class="form-group">
+            <input type="hidden" autofocus asp-for="Id" />
+        </div>
+
+        <div class="text-right">
+            <button type="submit" class="btn btn-danger btn-block waves-effect waves-light">Remove Study Center</button>
+        </div>
+
+
+    </form>
+</div>

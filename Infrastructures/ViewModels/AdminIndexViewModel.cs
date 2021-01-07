@@ -6,8 +6,12 @@ using System.Threading.Tasks;
 
 namespace FastLearn.Infrastructures.ViewModels
 {
-    public class ManageFacultyViewModel
+    public class AdminIndexViewModel
     {
-        public IEnumerable<ApplicationUser> AvailableFaculties { get; set; }
+        public AdminIndexViewModel()
+        {
+            Admins = new List<ApplicationUser>();
+        }
+        public List<ApplicationUser> Admins { get; set; } 
     }
 }

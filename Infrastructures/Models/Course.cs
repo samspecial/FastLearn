@@ -17,6 +17,8 @@ namespace FastLearn.Infrastructures.Models
         public ICollection<Enrollment>  Enrollments{ get; set; }
         public string Duration { get; set; }
         public string CourseMaterial { get; set; }
-        public int ApplicationUserId { get; set; }
+        public string ApplicationUserId { get; set; }
+        public ApplicationUser ApplicationUser { get; set; }
+
     }
 }

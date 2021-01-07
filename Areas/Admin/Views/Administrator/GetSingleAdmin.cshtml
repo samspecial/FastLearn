@@ -1,0 +1,25 @@
+﻿@model AdminDetailsViewModel
+
+@{ 
+    ViewData["Title"] = "Administrator Details";
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-3"></div>
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body">
+                <h3 class="card-title">Full name: @Model.FullName</h3>
+                    <p class="card-text">Email Address: @Model.Email</p>
+                    <p class="card-text">Residential Address: @Model.Address</p>
+                    <p class="card-text">Phone Number: @Model.PhoneNumber</p>
+                    <p class="card-text">Locked Out Status: @Model.LockedOut</p>
+                    <p class="card-text">User name: @Model.UserName</p>
+                    <p class="card-text">Two Factor: @Model.TwoFactor</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3"></div>
+    </div>
+</div>

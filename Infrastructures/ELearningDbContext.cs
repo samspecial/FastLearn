@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace FastLearn.Infrastructures
 {
-    public class ELearningDbContext:IdentityDbContext
+    public class ELearningDbContext:IdentityDbContext<ApplicationUser>
     {
         public ELearningDbContext(DbContextOptions<ELearningDbContext> options):base(options)
         {

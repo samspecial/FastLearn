@@ -6,8 +6,10 @@ using System.Threading.Tasks;
 
 namespace FastLearn.Infrastructures.ViewModels
 {
-    public class FacultyAddViewModel
+    public class AdminEditViewModel
     {
+        public string Id { get; set; }
+
         [Required]
         [MinLength(8)]
         [Display(Name = "full name")]
@@ -24,6 +26,9 @@ namespace FastLearn.Infrastructures.ViewModels
         [DataType(DataType.PhoneNumber)]
         [Display(Name = "phone number")]
         public string PhoneNumber { get; set; }
-       
+
+        //[Required(ErrorMessage = "Please enter your password")]
+        [DataType(DataType.Password)]
+        public string Password { get; set; }
     }
 }

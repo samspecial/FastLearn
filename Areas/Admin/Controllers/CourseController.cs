@@ -1,4 +1,5 @@
 ﻿using FastLearn.Areas.Admin.Repositories;
+using FastLearn.Areas.Admin.ViewModels;
 using FastLearn.Infrastructures.Models;
 using FastLearn.Infrastructures.ViewModels;
 using Microsoft.AspNetCore.Authorization;
@@ -14,7 +15,7 @@ using System.Threading.Tasks;
 namespace FastLearn.Areas.Admin.Controllers
 {
     [Area("admin")]
-    //[Authorize (Roles = "Administrator")]
+    [Authorize (Roles = "Administrator")]
     public class CourseController : Controller
     {
         private readonly ICourse _course;
@@ -24,11 +25,6 @@ namespace FastLearn.Areas.Admin.Controllers
         {
             _course = course;
             this.webHostEnvironment = webHostEnvironment;
-        }
-        public IActionResult Index()
-        {
-
-            return View();
         }
 
         public async Task<IActionResult> ManageCourse()
@@ -85,6 +81,55 @@ namespace FastLearn.Areas.Admin.Controllers
             return filePath;
         }
 
+        [HttpGet]
+        public async Task<IActionResult> CourseDetails(int Id) 
+        {
+            if (Id == 0)
+                return NotFound();
+            var course = await _course.GetCourse(Id);
+            if (course == null)
+                return NotFound();
+            var courseDetails = new CourseDetailsViewModel
+            {
+                Id = course.Id,
+                Name = course.Name,
+                Fee = course.Fee,
+                Duration = course.Duration,
+                Prerequisite = course.Prerequisite,
+                DisplayImage = course.DisplayImage
+            };
+            return View(courseDetails);
+        }
 
+        [HttpGet]
+        public async Task<IActionResult> EditCourse(int Id)
+        {
+            if (Id == 0)
+                return NotFound();
+            var currentCourse = await _course.GetCourse(Id);
+            if (currentCourse == null)
+                return NotFound();
+            var editCourse = new CourseEditViewModel
+            {
+                Id = currentCourse.Id,
+                Name = currentCourse.Name,
+                Fee = currentCourse.Fee,
+                Duration = currentCourse.Duration,
+                Prerequisite = currentCourse.Prerequisite,
+                
+            };
+
+            return View(editCourse);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> EditCourse(CourseEditViewModel courseEdit)
+        {
+            if (!ModelState.IsValid)
+                return View(courseEdit);
+            var editCourse = await _course.GetCourse(courseEdit.Id);
+            return View();
+        }
     }
 }

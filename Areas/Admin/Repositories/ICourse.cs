@@ -11,6 +11,8 @@ namespace FastLearn.Areas.Admin.Repositories
         Task<bool> AddCourse(Course course);
         Task<IEnumerable<Course>> GetCourses();
         Task<Course> GetCourse(int id);
+        Task RemoveCourse(int id);
+        Task<bool> EditCourse(Course course);
 
     }
 }

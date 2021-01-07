@@ -28,6 +28,13 @@ namespace FastLearn.Areas.Admin.Repositories
              
         }
 
+        public async Task<bool> EditCourse(Course course)
+        {
+            context.Courses.Update(course);
+            await context.SaveChangesAsync();
+            return true;
+        }
+
         public async Task<Course> GetCourse(int id)
         {
             return await context.Courses.FindAsync(id);
@@ -38,7 +45,11 @@ namespace FastLearn.Areas.Admin.Repositories
             return await context.Courses.OrderByDescending(c => c.Name).ToListAsync();
         }
 
-
-
+        public async Task RemoveCourse(int id)
+        {
+            var result = await context.Courses.FindAsync(id);
+            context.Courses.Remove(result);
+            await context.SaveChangesAsync();
+        }
     }
 }

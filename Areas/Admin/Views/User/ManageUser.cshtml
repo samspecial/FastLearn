@@ -1,0 +1,153 @@
+﻿@model ManageUserViewModel
+@{
+    ViewData["Title"] = "User Page";
+}
+
+<div>
+    <div class="container-fluid  dashboard-content">
+        <div class="row">
+            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                <div class="page-header">
+                    <h2 class="pageheader-title">Registration</h2>
+                    <p class="pageheader-text">Section showing realtime statistics of the total student enrollment at FastLearn.</p>
+                    <div class="page-breadcrumb">
+                        <nav aria-label="breadcrumb">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item"><a href="#" class="breadcrumb-link">Dashboard</a></li>
+                                <li class="breadcrumb-item"><a href="#" class="breadcrumb-link">Table</a></li>
+                                <li class="breadcrumb-item active" aria-current="page">Enrollments</li>
+                            </ol>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row mb-5">
+            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                <a asp-action="adduser" asp-controller="user" class="btn btn-info text-white">ONBOARD USER</a>
+            </div>
+        </div>
+        <div class="row">
+            <!-- ============================================================== -->
+            <!-- basic table  -->
+            <!-- ============================================================== -->
+            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                <div class="card">
+                    <h5 class="card-header">Available Faculty</h5>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-striped table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>S/N</th>
+                                        <th>Full Name</th>
+                                        <th>Email</th>
+                                        <th>Address</th>
+                                        <th>Phone Number</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @if (Model.AvailableFaculties.Any())
+                                    {
+                                        var count = 0;
+                                        foreach (var instructor in Model.AvailableFaculties)
+                                        {
+                                            <tr>
+                                                <td><p>@(++count)</p></td>
+                                                <td><p>@instructor.FullName</p></td>
+                                                <td><p>@instructor.Email</p></td>
+                                                <td><p>@instructor.Address</p></td>
+                                                <td><p>@instructor.PhoneNumber</p></td>
+                                                <td>
+                                                
+                                                <div class="btn-group dropdown">
+                                                    <a href="javascript: void(0);" class="dropdown-toggle arrow-none btn btn-light btn-sm" data-toggle="dropdown" aria-expanded="false"><i class="mdi mdi-dots-horizontal"></i></a>
+                                                    <div class="dropdown-menu dropdown-menu-right">
+                                                        <a class="dropdown-item" asp-controller="user" asp-action="edituser" asp-route-id="@instructor.Id"><i class="mdi mdi-pencil mr-1 text-muted"></i>Edit</a>
+                                                        <a class="dropdown-item" asp-controller="user" asp-action="delete" asp-route-id="@instructor.Id"><i class="mdi mdi-delete mr-1 text-muted"></i>Delete</a>
+                                                        <a class="dropdown-item" asp-controller="user" asp-action="getuser" asp-route-id="@instructor.Id"><i class="mdi mdi-email mr-1 text-muted"></i>More</a>
+                                                    </div>
+                                                </div>
+                                                
+                                                </td>
+                                            </tr>
+                                        }
+                                    }
+
+                                    else
+                                    {
+                                        <tr colspan="6"><td><p>The database record is currently empty</p></td></tr>
+                                    }
+
+                                </tbody>
+
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                <div class="card">
+                    <h5 class="card-header">Available Student</h5>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-striped table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>S/N</th>
+                                        <th>Full Name</th>
+                                        <th>Email</th>
+                                        <th>Address</th>
+                                        <th>Phone Number</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @if (Model.AvailableStudents.Any())
+                                    {
+
+                                    var count = 0;
+                                    foreach (var student in Model.AvailableStudents)
+                                    {
+                                    <tr>
+                                        <td><p>@(++count)</p></td>
+                                        <td><p>@student.FullName</p></td>
+                                        <td><p>@student.Email</p></td>
+                                        <td>
+                                            <p>@student.Address.Substring(0, 30)</p>
+                                        </td>
+                                        <td><p>@student.PhoneNumber</p></td>
+                                        <td>
+                                            <div class="btn-group dropdown">
+                                                <a href="javascript: void(0);" class="dropdown-toggle arrow-none btn btn-light btn-sm" data-toggle="dropdown" aria-expanded="false"><i class="mdi mdi-dots-horizontal"></i></a>
+                                                <div class="dropdown-menu dropdown-menu-right">
+                                                    <a class="dropdown-item" asp-controller="user" asp-action="edituser" asp-route-id="@student.Id"><i class="mdi mdi-pencil mr-1 text-muted"></i>Edit</a>
+                                                    <a class="dropdown-item" asp-controller="user" asp-action="delete" asp-route-id="@student.Id"><i class="mdi mdi-delete mr-1 text-muted"></i>Delete</a>
+                                                    <a class="dropdown-item" asp-controller="user" asp-action="getuser" asp-route-id="@student.Id"><i class="mdi mdi-email mr-1 text-muted"></i>More</a>
+                                                </div>
+                                            </div>
+
+                                        </td>
+                                    </tr>
+                                    }
+                                    }
+
+                                    else
+                                    {
+                                    <tr colspan="6"><td><p>The database record is currently empty</p></td></tr>
+                                    }
+
+                                </tbody>
+
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+

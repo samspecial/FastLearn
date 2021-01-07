@@ -5,10 +5,10 @@ using System.Threading.Tasks;
 
 namespace FastLearn.Infrastructures.ViewModels
 {
-    public class FacultyDeleteViewModel
+    public class DeleteStudyViewModel
     {
-        public string Id { get; set; }
-        
-        public string FullName { get; set; }
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public string Location { get; set; }
     }
 }
